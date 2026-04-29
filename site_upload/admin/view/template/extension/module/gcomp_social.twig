@@ -1,0 +1,67 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <a href="{{ add_url }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ button_add }}</a>
+        <button type="submit" form="form-module" class="btn btn-success"><i class="fa fa-save"></i> {{ button_save }}</button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}</div>{% endif %}
+    {% if success %}<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}</div>{% endif %}
+
+    <div class="panel panel-default">
+      <div class="panel-heading"><h3 class="panel-title"><i class="fa fa-cog"></i> {{ heading_title }}</h3></div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" id="form-module" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_module_status }}</label>
+            <div class="col-sm-10">
+              <select name="module_gcomp_social_status" class="form-control">
+                <option value="1" {% if module_gcomp_social_status == '1' %}selected{% endif %}>{{ text_enabled }}</option>
+                <option value="0" {% if module_gcomp_social_status == '0' %}selected{% endif %}>{{ text_disabled }}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead><tr>
+              <th>#</th>
+              <th>{{ column_label }}</th>
+              <th>{{ column_type }}</th>
+              <th>{{ column_position }}</th>
+              <th>{{ column_status }}</th>
+              <th class="text-right">{{ column_action }}</th>
+            </tr></thead>
+            <tbody>
+              {% for item in items %}
+              <tr>
+                <td>{{ item.social_id }}</td>
+                <td><i class="fa {{ item.icon }}" style="color:{{ item.color }}"></i> {{ item.label_ka }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.position }}</td>
+                <td>{% if item.status %}<span class="label label-success">{{ text_enabled }}</span>{% else %}<span class="label label-default">{{ text_disabled }}</span>{% endif %}</td>
+                <td class="text-right">
+                  <a href="{{ edit_url }}&id={{ item.social_id }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+                  <a href="{{ delete_url }}&id={{ item.social_id }}" class="btn btn-danger btn-sm" onclick="return confirm('Delete?')"><i class="fa fa-trash"></i></a>
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="6" class="text-center">—</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }}

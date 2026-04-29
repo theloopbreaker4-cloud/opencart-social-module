@@ -1,0 +1,31 @@
+{% if header_items %}
+<div class="gcomp-social-header" id="gcompSocialHeader">
+  <div class="gcomp-social-popup" id="gcompSocialHeaderPopup">
+    {% for item in header_items %}
+    <a href="{{ item.href }}" class="gcomp-social-row" target="_blank" rel="noopener">
+      <span class="gcomp-social-ico" style="background:{{ item.color }}"><i class="fa {{ item.icon }}"></i></span>
+      <span class="gcomp-social-lbl">{{ item.label }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if floating_items %}
+<div class="gcomp-social-float" id="gcompSocialFloat">
+  <div class="gcomp-social-list" id="gcompSocialFloatList" style="display:none">
+    {% for item in floating_items %}
+    <a href="{{ item.href }}" class="gcomp-social-pill" target="_blank" rel="noopener">
+      <span class="gcomp-social-ico" style="background:{{ item.color }}"><i class="fa {{ item.icon }}"></i></span>
+      <span class="gcomp-social-lbl">{{ item.label }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  <button type="button" class="gcomp-social-toggle" id="gcompSocialFloatBtn" aria-label="Social">
+    <i class="fa fa-comments"></i>
+  </button>
+</div>
+{% endif %}
+
+<link rel="stylesheet" href="catalog/view/javascript/gcomp_social/social.css">
+<script src="catalog/view/javascript/gcomp_social/social.js"></script>

@@ -3,6 +3,11 @@
   ready(function () {
     var header = document.getElementById('gcompSocialHeader');
     if (header) {
+      // Move the header dropdown into the #phone area of Chameleon header
+      var phoneArea = document.getElementById('phone');
+      if (phoneArea) {
+        phoneArea.appendChild(header);
+      }
       header.addEventListener('click', function (e) {
         e.stopPropagation();
         header.classList.toggle('open');

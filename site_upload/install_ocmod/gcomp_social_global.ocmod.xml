@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+  <name>GCOMP Social Module - Global Inject</name>
+  <code>gcomp_social_global</code>
+  <version>1.0</version>
+  <author>gcomp.ge</author>
+
+  <!-- Inject Social module into header on every page -->
+  <file path="catalog/controller/common/header.php">
+    <operation>
+      <search><![CDATA[return $this->load->view('common/header', $data);]]></search>
+      <add position="before"><![CDATA[
+        $data['gcomp_social_widget'] = $this->load->controller('extension/module/gcomp_social');
+      ]]></add>
+    </operation>
+  </file>
+
+  <!-- Output the widget at the end of header.twig (so it floats over everything) -->
+  <file path="catalog/view/theme/chameleon/template/common/header.twig">
+    <operation>
+      <search><![CDATA[</body>]]></search>
+      <add position="before"><![CDATA[
+        {% if gcomp_social_widget %}{{ gcomp_social_widget }}{% endif %}
+      ]]></add>
+    </operation>
+    <operation error="skip">
+      <search><![CDATA[</header>]]></search>
+      <add position="after"><![CDATA[
+        {% if gcomp_social_widget %}{{ gcomp_social_widget }}{% endif %}
+      ]]></add>
+    </operation>
+  </file>
+
+</modification>

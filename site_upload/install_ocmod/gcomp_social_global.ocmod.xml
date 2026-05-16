@@ -1,33 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <modification>
   <name>GCOMP Social Module - Global Inject</name>
   <code>gcomp_social_global</code>
-  <version>1.0</version>
+  <version>2.0</version>
   <author>gcomp.ge</author>
 
-  <!-- Inject Social module into header on every page -->
+  <!-- Inject widget render into header controller (passed via $data to all pages) -->
   <file path="catalog/controller/common/header.php">
     <operation>
       <search><![CDATA[return $this->load->view('common/header', $data);]]></search>
       <add position="before"><![CDATA[
-        $data['gcomp_social_widget'] = $this->load->controller('extension/module/gcomp_social');
+		$data['gcomp_social_widget'] = $this->load->controller('extension/module/gcomp_social');
       ]]></add>
     </operation>
   </file>
 
-  <!-- Output the widget at the end of header.twig (so it floats over everything) -->
-  <file path="catalog/view/theme/chameleon/template/common/header.twig">
+  <!-- Inject widget into footer controller too (in case header data doesn't reach all pages) -->
+  <file path="catalog/controller/common/footer.php">
+    <operation error="skip">
+      <search><![CDATA[return $this->load->view('common/footer', $data);]]></search>
+      <add position="before"><![CDATA[
+		$data['gcomp_social_widget'] = $this->load->controller('extension/module/gcomp_social');
+      ]]></add>
+    </operation>
+  </file>
+
+  <!-- Output the widget at the very end of footer.twig (just before </body>) -->
+  <file path="catalog/view/theme/chameleon/template/common/footer.twig">
     <operation>
       <search><![CDATA[</body>]]></search>
       <add position="before"><![CDATA[
-        {% if gcomp_social_widget %}{{ gcomp_social_widget }}{% endif %}
-      ]]></add>
-    </operation>
-    <operation error="skip">
-      <search><![CDATA[</header>]]></search>
-      <add position="after"><![CDATA[
-        {% if gcomp_social_widget %}{{ gcomp_social_widget }}{% endif %}
-      ]]></add>
+{% if gcomp_social_widget %}{{ gcomp_social_widget }}{% endif %}
+]]></add>
     </operation>
   </file>
 

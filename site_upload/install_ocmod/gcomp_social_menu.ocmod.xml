@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>GCOMP - Social Menu Item</name>
+  <code>gcomp_social_menu</code>
+  <version>2.0</version>
+  <author>gcomp.ge</author>
+
+  <file path="admin/controller/common/column_left.php">
+    <operation>
+      <search><![CDATA[// GCOMP menu items inserted here by sub-mods]]></search>
+      <add position="after"><![CDATA[
+			if ($this->user->hasPermission('access', 'extension/module/gcomp_social')) {
+				$gcomp[] = array(
+					'name'     => 'სოციალური ქსელები',
+					'href'     => $this->url->link('extension/module/gcomp_social', 'user_token=' . $this->session->data['user_token'], true),
+					'children' => array()
+				);
+			}]]></add>
+    </operation>
+  </file>
+
+</modification>
